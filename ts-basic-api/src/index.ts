@@ -75,4 +75,26 @@ const user4: Userobj = {
 
 //RECORD AND MAP
 
-    
+type User8={
+    id:string
+    username:string
+}
+
+ type Users=Record<string,User8>
+ const myUser:Users=
+ {
+  "one":
+  {
+    id:'hellow',
+    username:"edward123"
+  }
+ }
+type Cars=
+{
+  cylinders:number,
+  type:string
+}
+ const cars=new Map<string,Cars>()
+ cars.set("one",{cylinders:6,type:"v6"})
+ console.log( cars.get("one"))
+

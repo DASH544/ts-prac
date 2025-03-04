@@ -1,22 +1,19 @@
 import { WebSocketServer,WebSocket } from "ws";
 
 const wss=new WebSocketServer({port:8080})
-let userCount=0
-let allSocket:WebSocket[]=[]
+
+const arena=new Map<string,Set<WebSocket>>()
+// const user=new Map<WebSocket,string>()
 wss.on("connection",(socket)=>
     {
-        allSocket.push(socket)
-        userCount++
-        console.log(
-            "user connected"+userCount
-        )
-        socket.on("message",(message)=>
+      socket.on("error",console.error)
+      socket.on('message',function message(data)
+      {
+        const parsedMessage=JSON.parse(data.toString())
+        if(parsedMessage.type==="join")
             {
-                console.log("message recieved "+message.toString()) 
-                allSocket.forEach((e)=>
-                    {
-                        const s=e
-                        s.send(message.toString())
-                    })
-            })
+                const roomName=parsedMessage.roomId
+                arena.set(roomName,new Set())
+            }
+      })
     })
